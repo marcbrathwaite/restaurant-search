@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { Helmet } from 'react-helmet'
+import styled from 'styled-components'
 
-function App() {
+const Container = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  max-width: 800px;
+`
+
+const App = () => {
+  useEffect(() => {
+    alert('this is a test')
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Helmet>
+        <title>Restaurant Search</title>
+        <meta
+          name="description"
+          content="Web app which allows users to search for restaurants in cities around the world. Uses the Opentable API"
+        />
+        <meta name="keywords" content="Restaurant, Food, City" />
+        <meta name="author" content="Marc Brathwaite" />
+      </Helmet>
+      <Container>Test</Container>
+    </>
+  )
 }
 
-export default App;
+export default App
