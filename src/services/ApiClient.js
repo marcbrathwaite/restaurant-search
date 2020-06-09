@@ -3,7 +3,7 @@ class ApiClient {
     this._client = client
   }
 
-  async getRestaurants(city, page = 1, limit = 100) {
+  async getRestaurants(city, page = 1, limit = 25) {
     const params = {
       city,
       page,
