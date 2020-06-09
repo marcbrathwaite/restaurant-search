@@ -21,7 +21,11 @@ const renderer = (html, store) => {
   const styles = sheet.getStyleTags()
   const helmet = Helmet.renderStatic()
 
-  html.replace('<div id="root"></div>', `<div id="root">${serverHTML}</div>`)
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${serverHTML}</div>`
+  )
+
   // Put title, meta and styles in head on html
   const head = helmet.title.toString() + helmet.meta.toString() + styles
   const index = html.indexOf('</head>')
