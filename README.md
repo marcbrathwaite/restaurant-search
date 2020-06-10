@@ -13,8 +13,9 @@ npm run dev:client
 ```
 
 ## Run (SSR - localhost:4000)
-Run the below command from within the root directory
+Run the below commands from within the root directory
 ```
+npm run build
 npm run start
 ```
 
