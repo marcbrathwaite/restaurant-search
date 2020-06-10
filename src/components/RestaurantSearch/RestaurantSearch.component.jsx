@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 // Actions
 import {
@@ -9,7 +8,8 @@ import {
 } from '../../redux/search/search.actions'
 // Selectors
 import {
-  selectRefinedSearch
+  selectRefinedSearch,
+  selectCitySearch
 } from '../../redux/search/search.selectors'
 // Styles
 import {
@@ -24,7 +24,8 @@ const RestaurantSearch = ({
   setCitySearch,
   setRefinedSearch,
   refinedSearch,
-  clearRefinedSearch
+  clearRefinedSearch,
+  citySearch
 }) => {
   const [cityInput, setCityInput] = useState('')
   const [refinedInput, setRefinedInput] = useState('')
@@ -74,8 +75,9 @@ const RestaurantSearch = ({
             value={refinedInput}
             onChange={(event) => setRefinedInput(event.target.value)}
             placeholder="Refine Search"
+            disabled={citySearch === ''}
           />
-          <SearchButton type="submit">Refine Search</SearchButton>
+          <SearchButton type="submit" disabled={citySearch === ''}>Refine Search</SearchButton>
         </SearchInputContainer>
       </SearchContainer>
       {refinedSearch && (
@@ -88,7 +90,8 @@ const RestaurantSearch = ({
 }
 
 const mapStateToProps = (state) => ({
-  refinedSearch: selectRefinedSearch(state)
+  refinedSearch: selectRefinedSearch(state),
+  citySearch: selectCitySearch(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -96,9 +99,5 @@ const mapDispatchToProps = (dispatch) => ({
   setRefinedSearch: (refine) => dispatch(setRefinedSearch(refine)),
   clearRefinedSearch: () => dispatch(clearRefinedSearch())
 })
-
-RestaurantSearch.propTypes = {
-  setCitySearch: PropTypes.func.isRequired
-}
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantSearch)

@@ -21,10 +21,13 @@ const apiClient = new ApiClient(axiosInstance)
 // initialize restaurant manager
 const restaurantManager = new RestaurantManager(apiClient)
 
-const middlewares = [logger, thunk.withExtraArgument(restaurantManager)]
+const middlewares = [thunk.withExtraArgument(restaurantManager)]
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger)
+}
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 // Hookup Redux dev tools
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middlewares)))
 

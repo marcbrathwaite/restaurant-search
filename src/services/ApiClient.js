@@ -9,7 +9,6 @@ class ApiClient {
       page,
       per_page: limit
     }
-    console.log(params)
     const res = await this._client.get('/restaurants', {
       params
     })

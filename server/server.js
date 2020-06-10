@@ -1,8 +1,10 @@
 import express from 'express'
+import compression from 'compression'
 
 import registerSeverSideRender from './middleware/registerServerSideRender'
 
 const app = express()
+app.use(compression())
 
 registerSeverSideRender(app)
 

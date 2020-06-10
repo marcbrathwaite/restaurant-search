@@ -5,6 +5,7 @@ export class NameSpecification {
   }
 
   isSatisfied(restaurant) {
+    if (restaurant.name === undefined) return false
     return this.name === ''
       ? true
       : restaurant.name
@@ -21,6 +22,7 @@ export class AddressSpecification {
   }
 
   isSatisfied(restaurant) {
+    if (restaurant.address === undefined) return false
     return this.address === ''
       ? true
       : restaurant.address
@@ -37,6 +39,7 @@ export class AreaSpecification {
   }
 
   isSatisfied(restaurant) {
+    if (restaurant.area === undefined) return false
     return this.area === ''
       ? true
       : restaurant.area

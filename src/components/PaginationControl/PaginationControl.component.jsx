@@ -15,7 +15,7 @@ import {
   CurrentPageContainer
 } from './PaginationControl.styles'
 
-const PaginationControl = ({
+export const PaginationControl = ({
   currentPage,
   incrementPage,
   hasMorePages,

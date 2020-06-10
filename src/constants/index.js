@@ -8,6 +8,8 @@ export const ASYNC_STATUS = {
   ERROR: 'ERROR'
 }
 
+export const PAGE_COUNT = 10
+
 // colors
 export const colors = {
   accessibleGreen: '#248700',

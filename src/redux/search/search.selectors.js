@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
-
-// TODO: Move to constants
-const PAGE_COUNT = 10
+// constants
+import { PAGE_COUNT } from '../../constants'
 
 const selectSearch = (state) => state.search
 
@@ -27,7 +26,8 @@ export const selectFilteredResults = createSelector(
 
 export const selectDisplayedResults = createSelector(
   [selectFilteredResults, selectPage],
-  (filteredResults, page) => filteredResults.slice((page - 1) * PAGE_COUNT, page * PAGE_COUNT)
+  (filteredResults, page) =>
+    filteredResults.slice((page - 1) * PAGE_COUNT, page * PAGE_COUNT)
 )
 
 export const selectHasMorePages = createSelector(
