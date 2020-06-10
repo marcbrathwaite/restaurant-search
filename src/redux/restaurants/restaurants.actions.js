@@ -1,5 +1,7 @@
 // action types
 import types from './restaurants.types'
+// actions
+import { getFilteredResults } from '../search/search.actions'
 // constants
 import { ASYNC_STATUS } from '../../constants'
 
@@ -7,25 +9,18 @@ const { PENDING, SUCCESS, ERROR } = ASYNC_STATUS
 export const getRestaurants = (city) => async (
   dispatch,
   getState,
-  apiClient
+  manager
 ) => {
   dispatch({
     type: `${types.GET_RESTAURANTS}_${PENDING}`
   })
   try {
-    const {
-      total_entries,
-      current_page,
-      per_page,
-      restaurants
-    } = await apiClient.getRestaurants(city)
+    const res = await manager.getRestaurants(city)
     dispatch({
       type: `${types.GET_RESTAURANTS}_${SUCCESS}`,
-      total_entries,
-      current_page,
-      per_page,
-      restaurants
+      res
     })
+    dispatch(getFilteredResults())
   } catch (error) {
     dispatch({
       type: `${types.GET_RESTAURANTS}_${ERROR}`,

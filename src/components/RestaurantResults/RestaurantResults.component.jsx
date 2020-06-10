@@ -2,32 +2,48 @@ import React from 'react'
 import { connect } from 'react-redux'
 // components
 import Restaurant from '../Restaurant/Restaurant.component'
+// actions
+import { getFilteredResults } from '../../redux/search/search.actions'
 // Selectors
-import { selectRestaurantEntries } from '../../redux/restaurants/restaurants.selectors'
+import {
+  selectFilteredResults,
+  selectShowMore
+} from '../../redux/search/search.selectors'
 
-const RestaurantResults = ({ restaurants }) => {
+const RestaurantResults = ({ restaurants, showMore, getFilteredResults }) => {
   return (
     <div>
-      {restaurants.length > 0 && (<ul>
-        {
-          restaurants.map(({ id, image_url, name, address, price }) => {
-            const restaurant = {image_url, name, address, price}
+      {restaurants.length > 0 && (
+        <ul>
+          {restaurants.map(({ id, image_url, name, address, price }) => {
+            const restaurant = { image_url, name, address, price }
             return (
               <li key={id}>
-                <Restaurant restaurant={restaurant}/>
+                <Restaurant restaurant={restaurant} />
               </li>
             )
-          })
-        }
-      </ul>)}
+          })}
+        </ul>
+      )}
+      {showMore && (
+        <div>
+          <button onClick={() => getFilteredResults()}>Show more</button>
+        </div>
+      )}
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    restaurants: selectRestaurantEntries(state)
+    restaurants: selectFilteredResults(state),
+    showMore: selectShowMore(state)
   }
 }
 
-export default connect(mapStateToProps)(RestaurantResults)
+const mapDispatchToProps = (dispatch) => ({
+  getFilteredResults: () => dispatch(getFilteredResults())
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantResults)

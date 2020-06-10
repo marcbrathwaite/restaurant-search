@@ -6,6 +6,8 @@ import axios from 'axios'
 import rootReducer from './rootReducer'
 // services
 import ApiClient from '../services/ApiClient'
+// manager
+import RestaurantManager from '../managers/RestaurantManager'
 // constants
 import { API_ENDPOINT } from '../constants'
 
@@ -16,8 +18,10 @@ const axiosInstance = axios.create({
 
 // initalize api client
 const apiClient = new ApiClient(axiosInstance)
+// initialize restaurant manager
+const restaurantManager = new RestaurantManager(apiClient)
 
-const middlewares = [logger, thunk.withExtraArgument(apiClient)]
+const middlewares = [logger, thunk.withExtraArgument(restaurantManager)]
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 // Hookup Redux dev tools
