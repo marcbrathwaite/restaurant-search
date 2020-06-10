@@ -35,5 +35,5 @@ Not sure.
   "lives": "Toronto",
   "strengths": ["fast learner", "good problem solver"],
   "weaknesses": ["could be better with documentation"],
-  "hobbies": ["bootcamp workouts", "cooking"],
+  "hobbies": ["bootcamp workouts", "cooking"]
 }
