@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
-import App from '../../src/App'
+import App from '../../src/components/App'
 
 const renderer = (html, store) => {
   const sheet = new ServerStyleSheet()
