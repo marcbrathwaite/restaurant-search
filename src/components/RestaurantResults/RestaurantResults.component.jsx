@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 // components
 import Restaurant from '../Restaurant/Restaurant.component'
 // actions
-import { getFilteredResults } from '../../redux/search/search.actions'
+import { incrementPage } from '../../redux/search/search.actions'
 // Selectors
 import {
-  selectFilteredResults,
-  selectShowMore
+  selectDisplayedResults,
+  selectDoShowMore
 } from '../../redux/search/search.selectors'
 
-const RestaurantResults = ({ restaurants, showMore, getFilteredResults }) => {
+const RestaurantResults = ({ restaurants, doShowMore, handleShowMore }) => {
   return (
     <div>
       {restaurants.length > 0 && (
@@ -25,9 +25,9 @@ const RestaurantResults = ({ restaurants, showMore, getFilteredResults }) => {
           })}
         </ul>
       )}
-      {showMore && (
+      {doShowMore && (
         <div>
-          <button onClick={() => getFilteredResults()}>Show more</button>
+          <button onClick={() => handleShowMore()}>Show more</button>
         </div>
       )}
     </div>
@@ -36,13 +36,13 @@ const RestaurantResults = ({ restaurants, showMore, getFilteredResults }) => {
 
 const mapStateToProps = (state) => {
   return {
-    restaurants: selectFilteredResults(state),
-    showMore: selectShowMore(state)
+    restaurants: selectDisplayedResults(state),
+    doShowMore: selectDoShowMore(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getFilteredResults: () => dispatch(getFilteredResults())
+  handleShowMore: () => dispatch(incrementPage())
 })
 
 

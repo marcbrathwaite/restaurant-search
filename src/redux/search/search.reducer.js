@@ -4,8 +4,7 @@ const defaultState = {
   citySearch: '',
   refinedSearch: '',
   filteredResults: [],
-  page: 1,
-  showMore: false
+  page: 1
 }
 
 const searchReducer = (state = defaultState, action) => {
@@ -35,12 +34,16 @@ const searchReducer = (state = defaultState, action) => {
       }
     }
     case searchActionTypes.GET_FILTERED_RESULTS: {
-      const { filteredResults, page, showMore } = action
       return {
         ...state,
-        filteredResults: [...state.filteredResults, ...filteredResults],
-        page,
-        showMore
+        page: action.page,
+        filteredResults: [...action.filteredResults]
+      }
+    }
+    case searchActionTypes.INCREMENT_PAGE: {
+      return {
+        ...state,
+        page: state.page + 1
       }
     }
     default: {

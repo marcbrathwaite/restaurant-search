@@ -27,7 +27,7 @@ class RestaurantManager {
     //   page = current_page + 1
     // } while (numOfRetrievedRes < totalEntries)
 
-    // return restaurantRes.map(({ id, name, address, price, image_url }) => ({
+    // return restaurantRes.map(({ id, name, address, price, area, image_url }) => ({
     //   id,
     //   name,
     //   address,

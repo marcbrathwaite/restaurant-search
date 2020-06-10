@@ -4,17 +4,24 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 // Actions
-import { setCitySearch } from '../../redux/search/search.actions'
+import {
+  setCitySearch,
+  setRefinedSearch
+} from '../../redux/search/search.actions'
 
 const SearchInput = styled.input``
 const SearchButton = styled.button``
 
-const RestaurantSearch = ({ setCitySearch }) => {
+const RestaurantSearch = ({ setCitySearch, setRefineSearch }) => {
   const [cityInput, setCityInput] = useState('')
-  const [refineInput, setRefineInput] = useState('')
+  const [refinedInput, setRefinedInput] = useState('')
 
   const handleSubmitRefineSearch = (event) => {
-    setRefineInput('')
+    const sanitizedInput = refinedInput.trim()
+    if (sanitizedInput) {
+      setRefinedInput('')
+      setRefinedSearch(refinedInput)
+    }
   }
 
   const handleSubmitCitySearch = () => {
@@ -27,32 +34,41 @@ const RestaurantSearch = ({ setCitySearch }) => {
 
   return (
     <div>
-      <label className="visuallyhidden" htmlFor="city-input">
-        Search by City
-      </label>
-      <SearchInput
-        id="city-input"
-        value={cityInput}
-        onChange={(event) => setCityInput(event.target.value)}
-        placeholder="Search by City"
-      />
-      <SearchButton onClick={handleSubmitCitySearch}>City Search</SearchButton>
-      <label className="visuallyhidden" htmlFor="refine-input">
-        Refine Search
-      </label>
-      <SearchInput
-        id="refine-input"
-        value={refineInput}
-        onChange={(event) => setRefineInput(event.target.value)}
-        placeholder="Refine Search"
-      />
-      <SearchButton onClick={handleSubmitRefineSearch}>Refine Search</SearchButton>
+      <div>
+        <label className="visuallyhidden" htmlFor="city-input">
+          Search by City
+        </label>
+        <SearchInput
+          id="city-input"
+          value={cityInput}
+          onChange={(event) => setCityInput(event.target.value)}
+          placeholder="Search by City"
+        />
+        <SearchButton onClick={handleSubmitCitySearch}>
+          City Search
+        </SearchButton>
+      </div>
+      <div>
+        <label className="visuallyhidden" htmlFor="refine-input">
+          Refine Search
+        </label>
+        <SearchInput
+          id="refine-input"
+          value={refinedInput}
+          onChange={(event) => setRefinedInput(event.target.value)}
+          placeholder="Refine Search"
+        />
+        <SearchButton onClick={handleSubmitRefineSearch}>
+          Refine Search
+        </SearchButton>
+      </div>
     </div>
   )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  setCitySearch: (city) => dispatch(setCitySearch(city))
+  setCitySearch: (city) => dispatch(setCitySearch(city)),
+  setRefinedSearch: (refine) => dispatch(setRefinedSearch(refine))
 })
 
 RestaurantSearch.propTypes = {
