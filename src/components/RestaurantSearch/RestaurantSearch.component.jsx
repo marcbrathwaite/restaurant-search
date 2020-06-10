@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
 // Actions
 import {
@@ -10,17 +9,20 @@ import {
 } from '../../redux/search/search.actions'
 // Selectors
 import {
-  selectCitySearch,
   selectRefinedSearch
 } from '../../redux/search/search.selectors'
-
-const SearchInput = styled.input``
-const SearchButton = styled.button``
+// Styles
+import {
+  SearchInputContainer,
+  SearchInput,
+  SearchButton,
+  ClearFilter,
+  SearchContainer
+} from './RestaurantSearch.styles'
 
 const RestaurantSearch = ({
   setCitySearch,
   setRefinedSearch,
-  citySearch,
   refinedSearch,
   clearRefinedSearch
 }) => {
@@ -28,68 +30,64 @@ const RestaurantSearch = ({
   const [refinedInput, setRefinedInput] = useState('')
 
   const handleSubmitRefineSearch = (event) => {
+    event.preventDefault()
     const sanitizedInput = refinedInput.trim()
     if (sanitizedInput) {
-      setRefinedInput('')
       setRefinedSearch(refinedInput)
     }
   }
 
-  const handleSubmitCitySearch = () => {
+  const handleSubmitCitySearch = (event) => {
+    event.preventDefault()
     const sanitizedInput = cityInput.trim()
     if (sanitizedInput) {
-      setCityInput('')
       setCitySearch(cityInput)
     }
   }
 
+  const handleClearFilter = () => {
+    setRefinedInput('')
+    clearRefinedSearch()
+  }
+
   return (
     <div>
-      <div>
-        <label className="visuallyhidden" htmlFor="city-input">
-          Search by City
-        </label>
-        <SearchInput
-          id="city-input"
-          value={cityInput}
-          onChange={(event) => setCityInput(event.target.value)}
-          placeholder="Search by City"
-        />
-        <SearchButton onClick={handleSubmitCitySearch}>
-          City Search
-        </SearchButton>
-      </div>
-      <div>
-        <label className="visuallyhidden" htmlFor="refine-input">
-          Refine Search
-        </label>
-        <SearchInput
-          id="refine-input"
-          value={refinedInput}
-          onChange={(event) => setRefinedInput(event.target.value)}
-          placeholder="Refine Search"
-        />
-        <SearchButton onClick={handleSubmitRefineSearch}>
-          Refine Search
-        </SearchButton>
-      </div>
-      {citySearch && (
-        <div>
-          <p>Results for City: {citySearch}</p>
-          {refinedSearch && (
-            <div>
-              <p>Results filtered by: {refinedSearch}</p>
-              <p onClick={() => clearRefinedSearch()}>Clear Filter</p>
-            </div>
-          )}
-        </div>
+      <SearchContainer>
+        <SearchInputContainer onSubmit={handleSubmitCitySearch}>
+          <label className="visuallyhidden" htmlFor="city-input">
+            Search by City
+          </label>
+          <SearchInput
+            id="city-input"
+            value={cityInput}
+            onChange={(event) => setCityInput(event.target.value)}
+            placeholder="Search by City"
+          />
+          <SearchButton type="submit">City Search</SearchButton>
+        </SearchInputContainer>
+        <SearchInputContainer onSubmit={handleSubmitRefineSearch}>
+          <label className="visuallyhidden" htmlFor="refine-input">
+            Refine Search
+          </label>
+          <SearchInput
+            id="refine-input"
+            value={refinedInput}
+            onChange={(event) => setRefinedInput(event.target.value)}
+            placeholder="Refine Search"
+          />
+          <SearchButton type="submit">Refine Search</SearchButton>
+        </SearchInputContainer>
+      </SearchContainer>
+      {refinedSearch && (
+        <ClearFilter onClick={handleClearFilter}>
+          Clear Filter
+        </ClearFilter>
       )}
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  citySearch: selectCitySearch(state),
   refinedSearch: selectRefinedSearch(state)
 })
 

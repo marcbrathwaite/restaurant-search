@@ -1,16 +1,34 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
 // components
 import RestaurantSearch from '../RestaurantSearch/RestaurantSearch.component'
 import RestaurantResults from '../RestaurantResults/RestaurantResults.component'
+import PaginationControl from '../PaginationControl/PaginationControl.component'
+// selectors
+import { selectedHasResults } from '../../redux/search/search.selectors'
+// Styles
+import {
+  RestaurantSearchContainer,
+  RestaurantResultsContainer
+} from './RestaurantDirectory.styles'
 
-const RestaurantDirectory = () => {
+const RestaurantDirectory = ({ hasResults }) => {
   return (
     <>
-      <RestaurantSearch />
-      <RestaurantResults />
+      <>
+        <RestaurantSearchContainer>
+          <RestaurantSearch />
+        </RestaurantSearchContainer>
+        <RestaurantResultsContainer>
+          <RestaurantResults />
+        </RestaurantResultsContainer>
+        {hasResults && <PaginationControl />}
+      </>
     </>
   )
 }
 
-export default RestaurantDirectory
+const mapStateToProps = (state) => ({
+  hasResults: selectedHasResults(state)
+})
+export default connect(mapStateToProps)(RestaurantDirectory)

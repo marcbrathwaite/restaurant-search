@@ -1,14 +1,12 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-
 // components
 import RestaurantDirectory from './RestaurantDirectory/RestaurantDirectory.component'
-
 // styles
 import { GlobalStyle } from './global.styles'
+import { AppContainer, RestaurantDirectoryContainer } from './App.styles'
 
 const App = () => {
-
   return (
     <>
       <Helmet>
@@ -21,7 +19,11 @@ const App = () => {
         <meta name="author" content="Marc Brathwaite" />
       </Helmet>
       <GlobalStyle />
-      <RestaurantDirectory />
+      <AppContainer>
+        <RestaurantDirectoryContainer>
+          <RestaurantDirectory />
+        </RestaurantDirectoryContainer>
+      </AppContainer>
     </>
   )
 }

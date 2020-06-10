@@ -2,18 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 // components
 import Restaurant from '../Restaurant/Restaurant.component'
-// actions
-import { incrementPage } from '../../redux/search/search.actions'
 // Selectors
-import {
-  selectDisplayedResults,
-  selectDoShowMore
-} from '../../redux/search/search.selectors'
+import { selectDisplayedResults } from '../../redux/search/search.selectors'
 import { selectRestaurantStatus } from '../../redux/restaurants/restaurants.selectors'
+// styles
+import { RestaurantResult } from './RestaurantResults.style'
 // constants
 import { ASYNC_STATUS } from '../../constants'
 
-const RestaurantResults = ({ restaurants, doShowMore, handleShowMore, restaurantsStatus }) => {
+const RestaurantResults = ({ restaurants, restaurantsStatus }) => {
   if (restaurants.length === 0 && restaurantsStatus === ASYNC_STATUS.SUCCESS) {
     return <div>No Results found</div>
   }
@@ -26,39 +23,28 @@ const RestaurantResults = ({ restaurants, doShowMore, handleShowMore, restaurant
   }
 
   return (
-    <div>
+    <>
       {restaurants.length > 0 && (
         <ul>
           {restaurants.map(({ id, image_url, name, address, price }) => {
             const restaurant = { image_url, name, address, price }
             return (
-              <li key={id}>
+              <RestaurantResult key={id}>
                 <Restaurant restaurant={restaurant} />
-              </li>
+              </RestaurantResult>
             )
           })}
         </ul>
       )}
-      {doShowMore && (
-        <div>
-          <button onClick={() => handleShowMore()}>Show more</button>
-        </div>
-      )}
-    </div>
+    </>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
     restaurants: selectDisplayedResults(state),
-    doShowMore: selectDoShowMore(state),
     restaurantsStatus: selectRestaurantStatus(state)
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  handleShowMore: () => dispatch(incrementPage())
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(RestaurantResults)
+export default connect(mapStateToProps)(RestaurantResults)

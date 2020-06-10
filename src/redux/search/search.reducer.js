@@ -19,7 +19,8 @@ const searchReducer = (state = defaultState, action) => {
     case searchActionTypes.SET_REFINED_SEARCH: {
       return {
         ...state,
-        refinedSearch: action.refined
+        refinedSearch: action.refined,
+        page: action.page
       }
     }
     case searchActionTypes.CLEAR_CITY_SEARCH: {
@@ -44,6 +45,12 @@ const searchReducer = (state = defaultState, action) => {
       return {
         ...state,
         page: state.page + 1
+      }
+    }
+    case searchActionTypes.DECREMENT_PAGE: {
+      return {
+        ...state,
+        page: state.page - 1
       }
     }
     default: {

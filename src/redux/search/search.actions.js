@@ -44,6 +44,7 @@ export const setCitySearch = (city) => (dispatch) => {
 export const setRefinedSearch = (refined) => (dispatch) => {
   dispatch({
     type: searchActionTypes.SET_REFINED_SEARCH,
+    page: 1,
     refined
   })
   dispatch(getFilteredResults())
@@ -51,6 +52,10 @@ export const setRefinedSearch = (refined) => (dispatch) => {
 
 export const incrementPage = () => ({
   type: searchActionTypes.INCREMENT_PAGE
+})
+
+export const decrementPage = () => ({
+  type: searchActionTypes.DECREMENT_PAGE
 })
 
 export const clearRefinedSearch = () => (dispatch) => {

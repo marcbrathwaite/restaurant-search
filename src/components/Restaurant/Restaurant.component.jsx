@@ -1,15 +1,25 @@
 import React from 'react'
+// styles
+import {
+  RestaurantContainer,
+  RestaurantPicture,
+  RestaurantName,
+  RestaurantDetail
+} from './Restaurant.styles'
 
 const Restaurant = ({ restaurant }) => {
   return (
-    <div>
+    <RestaurantContainer>
+      <RestaurantPicture
+        src={restaurant.image_url}
+        alt={`${restaurant.name}`}
+      />
       <div>
-        <img src={restaurant.image_url} alt={`${restaurant.name}`} />
+        <RestaurantName>{restaurant.name}</RestaurantName>
+        <RestaurantDetail><span>Address:</span> {restaurant.address}</RestaurantDetail>
+        <RestaurantDetail><span>Price:</span>{restaurant.price}</RestaurantDetail>
       </div>
-      <h2>{restaurant.name}</h2>
-      <p>Address: {restaurant.address}</p>
-      <p>Price: {restaurant.price}</p>
-    </div>
+    </RestaurantContainer>
   )
 }
 

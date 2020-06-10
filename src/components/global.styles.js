@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
+    background-color: grey;
     font-family: 'Raleway', sans-serif;
     font-size: 1.6rem;
   }
