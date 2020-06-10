@@ -12,7 +12,8 @@ const searchReducer = (state = defaultState, action) => {
     case searchActionTypes.SET_CITY_SEARCH: {
       return {
         ...state,
-        citySearch: action.city
+        citySearch: action.city,
+        page: action.page
       }
     }
     case searchActionTypes.SET_REFINED_SEARCH: {
@@ -36,7 +37,6 @@ const searchReducer = (state = defaultState, action) => {
     case searchActionTypes.GET_FILTERED_RESULTS: {
       return {
         ...state,
-        page: action.page,
         filteredResults: [...action.filteredResults]
       }
     }

@@ -2,17 +2,28 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-
 // Actions
 import {
   setCitySearch,
-  setRefinedSearch
+  setRefinedSearch,
+  clearRefinedSearch
 } from '../../redux/search/search.actions'
+// Selectors
+import {
+  selectCitySearch,
+  selectRefinedSearch
+} from '../../redux/search/search.selectors'
 
 const SearchInput = styled.input``
 const SearchButton = styled.button``
 
-const RestaurantSearch = ({ setCitySearch, setRefineSearch }) => {
+const RestaurantSearch = ({
+  setCitySearch,
+  setRefinedSearch,
+  citySearch,
+  refinedSearch,
+  clearRefinedSearch
+}) => {
   const [cityInput, setCityInput] = useState('')
   const [refinedInput, setRefinedInput] = useState('')
 
@@ -62,17 +73,34 @@ const RestaurantSearch = ({ setCitySearch, setRefineSearch }) => {
           Refine Search
         </SearchButton>
       </div>
+      {citySearch && (
+        <div>
+          <p>Results for City: {citySearch}</p>
+          {refinedSearch && (
+            <div>
+              <p>Results filtered by: {refinedSearch}</p>
+              <p onClick={() => clearRefinedSearch()}>Clear Filter</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
 
+const mapStateToProps = (state) => ({
+  citySearch: selectCitySearch(state),
+  refinedSearch: selectRefinedSearch(state)
+})
+
 const mapDispatchToProps = (dispatch) => ({
   setCitySearch: (city) => dispatch(setCitySearch(city)),
-  setRefinedSearch: (refine) => dispatch(setRefinedSearch(refine))
+  setRefinedSearch: (refine) => dispatch(setRefinedSearch(refine)),
+  clearRefinedSearch: () => dispatch(clearRefinedSearch())
 })
 
 RestaurantSearch.propTypes = {
   setCitySearch: PropTypes.func.isRequired
 }
 
-export default connect(null, mapDispatchToProps)(RestaurantSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantSearch)

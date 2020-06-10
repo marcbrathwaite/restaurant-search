@@ -6,3 +6,8 @@ export const selectRestaurantEntries = createSelector(
   [selectRestaurants],
   restaurants => restaurants.entries
 )
+
+export const selectRestaurantStatus = createSelector(
+  [selectRestaurants],
+  restaurants => restaurants.status
+)

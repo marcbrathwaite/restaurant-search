@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 
 // TODO: Move to constants
-const PAGE_COUNT = 2
+const PAGE_COUNT = 25
 
 const selectSearch = (state) => state.search
 

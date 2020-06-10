@@ -7,7 +7,11 @@ import { selectRefinedSearch } from './search.selectors'
 import searchActionTypes from './search.types'
 // utils
 import filterResults from '../../utils/filterResults'
-import { NameSpecification, AddressSpecification, AreaSpecification } from '../../utils/specifications'
+import {
+  NameSpecification,
+  AddressSpecification,
+  AreaSpecification
+} from '../../utils/specifications'
 
 export const getFilteredResults = () => (dispatch, getState) => {
   const state = getState()
@@ -15,23 +19,23 @@ export const getFilteredResults = () => (dispatch, getState) => {
   const restaurants = selectRestaurantEntries(state)
   const refinedSearch = selectRefinedSearch(state)
 
-  // filters restaurants by the refinedSearch term
-  const filteredResults = filterResults(restaurants, [
+  // filters restaurants by the refinedSearch term if not empty
+  const filteredResults = refinedSearch !== '' ? filterResults(restaurants, [
     new NameSpecification(refinedSearch),
     new AddressSpecification(refinedSearch),
     new AreaSpecification(refinedSearch)
-  ])
+  ]) : restaurants
 
   dispatch({
     type: searchActionTypes.GET_FILTERED_RESULTS,
-    filteredResults,
-    page: 1
+    filteredResults
   })
 }
 
 export const setCitySearch = (city) => (dispatch) => {
   dispatch({
     type: searchActionTypes.SET_CITY_SEARCH,
+    page: 1,
     city
   })
   dispatch(getRestaurants())
@@ -45,8 +49,13 @@ export const setRefinedSearch = (refined) => (dispatch) => {
   dispatch(getFilteredResults())
 }
 
-export const incrementPage = () => {
-  return {
-    type: searchActionTypes.INCREMENT_PAGE
-  }
+export const incrementPage = () => ({
+  type: searchActionTypes.INCREMENT_PAGE
+})
+
+export const clearRefinedSearch = () => (dispatch) => {
+  dispatch({
+    type: searchActionTypes.CLEAR_REFINED_SEARCH
+  })
+  dispatch(getFilteredResults())
 }

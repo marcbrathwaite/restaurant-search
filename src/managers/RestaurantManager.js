@@ -32,6 +32,7 @@ class RestaurantManager {
     //   name,
     //   address,
     //   price,
+    //   area,
     //   image_url
     // }))
     //FIXME: remove

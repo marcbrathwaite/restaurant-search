@@ -9,8 +9,22 @@ import {
   selectDisplayedResults,
   selectDoShowMore
 } from '../../redux/search/search.selectors'
+import { selectRestaurantStatus } from '../../redux/restaurants/restaurants.selectors'
+// constants
+import { ASYNC_STATUS } from '../../constants'
 
-const RestaurantResults = ({ restaurants, doShowMore, handleShowMore }) => {
+const RestaurantResults = ({ restaurants, doShowMore, handleShowMore, restaurantsStatus }) => {
+  if (restaurants.length === 0 && restaurantsStatus === ASYNC_STATUS.SUCCESS) {
+    return <div>No Results found</div>
+  }
+  if (restaurantsStatus === ASYNC_STATUS.ERROR) {
+    return <div>Error retrieving results</div>
+  }
+
+  if (restaurantsStatus === ASYNC_STATUS.PENDING) {
+    return <div>Retrieving results</div>
+  }
+
   return (
     <div>
       {restaurants.length > 0 && (
@@ -37,7 +51,8 @@ const RestaurantResults = ({ restaurants, doShowMore, handleShowMore }) => {
 const mapStateToProps = (state) => {
   return {
     restaurants: selectDisplayedResults(state),
-    doShowMore: selectDoShowMore(state)
+    doShowMore: selectDoShowMore(state),
+    restaurantsStatus: selectRestaurantStatus(state)
   }
 }
 
