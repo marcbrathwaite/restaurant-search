@@ -12,7 +12,7 @@
     "axios": "^0.19.2",
     "compression": "^1.7.4",
     "core-js": "^3.6.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "ignore-styles": "^5.0.1",
     "jest-haste-map": "^26.0.1",
     "jest-message-util": "^26.0.1",
